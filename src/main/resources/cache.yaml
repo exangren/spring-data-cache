@@ -1,0 +1,18 @@
+hazelcast:
+  instance-name: users-app
+  cluster-name: users-app
+  network:
+    join:
+      multicast:
+        enabled: false
+      kubernetes:
+        enabled: true
+        service-name: hazelcast
+  map:
+    default:
+      time-to-live-seconds: 300
+      eviction:
+        eviction-policy: LRU
+        size: 20000
+      backup-count: 0
+      async-backup-count: 0

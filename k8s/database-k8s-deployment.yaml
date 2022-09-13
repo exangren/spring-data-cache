@@ -1,0 +1,69 @@
+apiVersion: v1
+data:
+  MYSQL_ROOT_PASSWORD: UjAwVF9QYTU1dzByRA==
+  MYSQL_USER: ZGJfdXNlcg==
+  MYSQL_PASSWORD: UGE1NXcwckQ=
+kind: Secret
+metadata:
+  name: sys-app-credentials
+  namespace: default
+type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: user-database
+  name: user-database
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: user-database
+  template:
+    metadata:
+      labels:
+        app: user-database
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0.30
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sys-app-credentials
+                key: MYSQL_ROOT_PASSWORD
+                optional: false
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: sys-app-credentials
+                key: MYSQL_USER
+                optional: false
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sys-app-credentials
+                key: MYSQL_PASSWORD
+                optional: false
+          - name: MYSQL_DATABASE
+            value: "db_users"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-database
+spec:
+  ports:
+    - name: user-database
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+  selector:
+    app: user-database
+  type: NodePort
