@@ -7,10 +7,16 @@ is Kubernetes.
 
 ## Installation
 To build and run the application you need:
-* JDK 11 (I think the code will work with Java 8, though it will require changes in pom.xml)
-* Apache Maven
-* Minikube to set up a local Kubernetes cluster
-* Docker CLI to build an application Docker image
+* **JDK 11** - Highly likely Java 8 will work as well,
+though it will require changes in pom.xml
+* **Apache Maven**
+* **Minikube** to set up a local Kubernetes cluster
+* **Docker CLI** to build an application Docker image
+* **MySQL** - The version is not important. 
+`MYSQL_HOST`, `MYSQL_PORT`, and other environment 
+variables might be set up or updated correspondingly. 
+See `app-k8s-deployment.yaml` and `database-k8s-deployment.yaml`, 
+where these variables are used.
 
 The application was build and run on Microsoft Windows, 
 but I believe it will work on other platforms as well after some 
