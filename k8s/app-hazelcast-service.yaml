@@ -11,3 +11,4 @@ spec:
   selector:
     app: app-users
   type: ClusterIP
+  clusterIP: None

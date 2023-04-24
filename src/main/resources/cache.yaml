@@ -7,7 +7,7 @@ hazelcast:
         enabled: false
       kubernetes:
         enabled: true
-        service-name: hazelcast
+        service-dns: hazelcast.default.svc.cluster.local
   map:
     default:
       time-to-live-seconds: 300
